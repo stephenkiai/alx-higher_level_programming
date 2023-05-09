@@ -1,3 +1,4 @@
+#!/usr/bin/python3
 FIZZ = "Fizz"
 BUZZ = "Buzz"
 
