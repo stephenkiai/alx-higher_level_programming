@@ -1,7 +1,7 @@
 #!/usr/bin/python3
-"""Defines a Square inheriting a rectangle."""
-
+"""Defines a Rectangle child class Square."""
 Rectangle = __import__('9-rectangle').Rectangle
+
 
 class Square(Rectangle):
     """Represent a square."""
@@ -10,7 +10,7 @@ class Square(Rectangle):
         """Initialize a new square.
 
         Args:
-            size (int): Size of new square.
+            size (int): size of new square.
         """
         self.integer_validator("size", size)
         super().__init__(size, size)
