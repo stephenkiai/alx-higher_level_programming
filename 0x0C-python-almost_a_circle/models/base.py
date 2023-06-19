@@ -124,7 +124,7 @@ class Base:
 
     @classmethod
     def load_from_file_csv(cls):
-        """Return list of classes instantiated from a CSV file.
+        """Return list of classes instantiated from CSV file.
 
         Reads from `<cls.__name__>.csv`.
 
