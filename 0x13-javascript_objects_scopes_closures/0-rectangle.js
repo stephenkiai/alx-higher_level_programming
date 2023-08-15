@@ -1,6 +1,6 @@
 #!/usr/bin/node
-//empty class Rectangle
+// empty class Rectangle
 
 module.exports = class Rectangle {
-  
+
 };
