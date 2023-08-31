@@ -3,6 +3,15 @@
 
 
 def find_peak(list_of_integers):
+    """
+    Finds peak element an unsorted list integers by a binary search approach.
+
+    Args:
+        list_of_integers (list): An unsorted list of integers.
+
+    Returns:
+        int or None: The peak element if found, or None if the list is empty.
+    """
     if not list_of_integers:
         return None
 
