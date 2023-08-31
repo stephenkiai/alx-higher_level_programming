@@ -1,3 +1,3 @@
 #!/bin/bash
 #script taking in URL & display all HTTP methods the server accepts
-curl -sI "$1" | awk '/^Allow:/{print $2}'
+curl -Is "$1" | grep Allow | cut -c 8-
