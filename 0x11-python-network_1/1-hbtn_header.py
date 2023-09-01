@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 """
-Send request to URL & displays value of X-Request-Id variable in response header
+Send request to URL & displays value of X-Request-Id
+variable in response header
 """
 
 import urllib.request
@@ -15,7 +16,6 @@ if __name__ == "__main__":
 
     try:
         with urllib.request.urlopen(url) as response:
-            # Check 'X-Request-Id' header presense in response
             if 'X-Request-Id' in response.headers:
                 x_request_id = response.headers['X-Request-Id']
                 print("X-Request-Id:", x_request_id)
