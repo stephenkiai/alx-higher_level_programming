@@ -1,32 +1,51 @@
 #!/usr/bin/node
 const request = require('request');
-const { argv } = require('process');
 
-const movieId = argv[2];
+const url = 'http://swapi.co/api/films/';
+let id = parseInt(process.argv[2], 10);
 
-const apiUrl = `https://swapi.dev/api/films/${movieId}/`;
-
-request(apiUrl, (error, response, body) => {
-  if (!error && response.statusCode === 200) {
-    const movieData = JSON.parse(body);
-    
-    console.log(`Characters in "${movieData.title}":`);
-    
-    // Iterate through characters in the same order as the list in the /films/ response
-    movieData.characters.reduce((promise, characterUrl) => {
-      return promise.then(() => {
-        return new Promise((resolve) => {
-          request(characterUrl, (charError, charResponse, charBody) => {
-            if (!charError && charResponse.statusCode === 200) {
-              const characterData = JSON.parse(charBody);
-              console.log(characterData.name);
-            }
-            resolve();
-          });
-        });
+const fetchMovieData = async () => {
+  try {
+    const { results } = await new Promise((resolve, reject) => {
+      request(url, (error, response, body) => {
+        if (error) {
+          reject(error);
+        } else {
+          resolve(JSON.parse(body));
+        }
       });
-    }, Promise.resolve());
-  } else {
-    console.error(`Error fetching movie: ${error || response.statusCode}`);
+    });
+
+    if (id < 4) {
+      id += 3;
+    } else {
+      id -= 3;
+    }
+
+    const movie = results.find((result) => result.episode_id === id);
+
+    if (movie) {
+      const characterNames = await Promise.all(
+        movie.characters.map(async (characterUrl) => {
+          const { name } = await new Promise((resolve, reject) => {
+            request(characterUrl, (error, response, body) => {
+              if (error) {
+                reject(error);
+              } else {
+                resolve(JSON.parse(body));
+              }
+            });
+          });
+          return name;
+        })
+      );
+
+      console.log(`Characters in Episode ${id}:`);
+      characterNames.forEach((name) => console.log(name));
+    }
+  } catch (error) {
+    console.error('An error occurred:', error);
   }
-});
+};
+
+fetchMovieData();
