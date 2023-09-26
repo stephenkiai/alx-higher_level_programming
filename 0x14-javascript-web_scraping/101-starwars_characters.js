@@ -1,16 +1,13 @@
 #!/usr/bin/node
 const request = require('request');
-const { argv } = require('process');
 
-const movieId = argv[2];
-
-const apiUrl = `https://swapi.dev/api/films/`;
-let id = parseInt(movieId, 10);
+const url = 'http://swapi.co/api/films/';
+let id = parseInt(process.argv[2], 10);
 
 const fetchMovieData = async () => {
   try {
     const { results } = await new Promise((resolve, reject) => {
-      request(apiUrl, (error, response, body) => {
+      request(url, (error, response, body) => {
         if (error) {
           reject(error);
         } else {
@@ -43,7 +40,7 @@ const fetchMovieData = async () => {
         })
       );
 
-      console.log(`Characters in Episode ${id} - ${movie.title}:`);
+      console.log(`Characters in Episode ${id}:`);
       characterNames.forEach((name) => console.log(name));
     }
   } catch (error) {
